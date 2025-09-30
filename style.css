@@ -1,0 +1,180 @@
+/* --- INITIALISATION DU SYSTÈME --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #00f7ff; /* Cyan néon */
+    --background-color: #010409;
+    --container-bg-color: rgba(13, 27, 42, 0.85);
+    --border-color: rgba(0, 247, 255, 0.2);
+    --text-color: #ced4da;
+    --title-font: 'Teko', sans-serif;
+    --body-font: 'Roboto', sans-serif;
+}
+
+body {
+    font-family: var(--body-font);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    
+    /* Fond avec grille technique */
+    background-image: 
+        linear-gradient(rgba(0, 247, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 247, 255, 0.07) 1px, transparent 1px);
+    background-size: 30px 30px;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    
+    /* Animation de "scanline" qui balaie l'écran */
+    animation: scanline 10s linear infinite;
+}
+
+@keyframes scanline {
+    0% { background-position: 0 0; }
+    100% { background-position: 30px 30px; }
+}
+
+/* --- CONTENEUR DE L'INTERFACE --- */
+.tech-container {
+    position: relative;
+    width: 90%;
+    max-width: 900px;
+    padding: 40px;
+    background: var(--container-bg-color);
+    backdrop-filter: blur(5px);
+    border: 1px solid var(--border-color);
+    text-align: center;
+    box-shadow: 0 0 30px rgba(0, 247, 255, 0.1);
+    
+    /* Animation d'apparition */
+    animation: fadeIn 1.5s ease-out;
+}
+
+/* Coins décoratifs pour le look "HUD" */
+.tech-container::before, .tech-container::after {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-color: var(--primary-color);
+    border-style: solid;
+    animation: corner-flicker 3s infinite alternate;
+}
+.tech-container::before {
+    top: -5px;
+    left: -5px;
+    border-width: 2px 0 0 2px;
+}
+.tech-container::after {
+    bottom: -5px;
+    right: -5px;
+    border-width: 0 2px 2px 0;
+}
+
+@keyframes corner-flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* --- AFFICHAGE TEXTUEL --- */
+h1 {
+    font-family: var(--title-font);
+    font-size: 4em;
+    letter-spacing: 4px;
+    color: var(--primary-color);
+    text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color);
+    margin-bottom: 10px;
+    
+    /* Animation de texte qui apparaît */
+    animation: text-flicker 2s ease-in-out;
+}
+
+p {
+    font-size: 1.1em;
+    margin-bottom: 40px;
+    color: var(--text-color);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+@keyframes text-flicker {
+    0% { opacity: 0; }
+    80% { opacity: 0.9; text-shadow: 0 0 15px var(--primary-color); }
+    85% { opacity: 0.5; }
+    100% { opacity: 1; text-shadow: 0 0 10px var(--primary-color); }
+}
+
+/* --- GRILLE DE SÉLECTION --- */
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.service-button {
+    font-family: var(--title-font);
+    letter-spacing: 2px;
+    font-size: 1.3em;
+    color: var(--primary-color);
+    text-decoration: none;
+    background-color: transparent;
+    border: 2px solid var(--border-color);
+    padding: 15px;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.4s, border-color 0.4s;
+    
+    /* Forme angulaire grâce à clip-path */
+    clip-path: polygon(10% 0, 100% 0, 100% 80%, 90% 100%, 0 100%, 0 20%);
+}
+
+/* Effet de remplissage au survol */
+.service-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary-color);
+    z-index: -1;
+    transition: left 0.4s ease-out;
+}
+
+.service-button:hover {
+    color: var(--background-color);
+    border-color: var(--primary-color);
+}
+
+.service-button:hover::before {
+    left: 0;
+}
+
+
+/* --- ADAPTATION POUR TERMINAUX MOBILES --- */
+@media (max-width: 800px) {
+    .button-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    h1 { font-size: 3em; }
+}
+
+@media (max-width: 500px) {
+    .button-grid {
+        grid-template-columns: 1fr;
+    }
+    h1 { font-size: 2.5em; }
+    .tech-container { padding: 25px; }
+}
