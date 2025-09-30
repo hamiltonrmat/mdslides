@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QG SkillQuest</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Teko:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <main class="tech-container">
+        <h1>QG SkillQuest</h1>
+        <p>Bienvenue Guide, sélectionnez votre destination.</p>
+
+        <!-- Ce conteneur sera rempli dynamiquement par le script -->
+        <div class="button-grid" id="button-container">
+            <p id="loading-message">Chargement des modules...</p>
+        </div>
+    </main>
+
+    <script>
+    // --- CONFIGURATION ---
+    // MODIFIEZ CES DEUX LIGNES AVEC VOTRE NOM D'UTILISATEUR ET LE NOM DE VOTRE DÉPÔT GITHUB
+    const GITHUB_USER = "votre-nom-d-utilisateur-github";
+    const GITHUB_REPO = "le-nom-de-votre-depot";
+    // -------------------
+
+    // Fonction pour formater le nom de fichier en un titre propre
+    function formatFileName(fileName) {
+        // Enlève l'extension .html
+        let title = fileName.replace('.html', '');
+        // Remplace les tirets et underscores par des espaces
+        title = title.replace(/[-_]/g, ' ');
+        // Met la première lettre de chaque mot en majuscule
+        return title.replace(/\b\w/g, char => char.toUpperCase());
+    }
+
+    // Le script s'exécute une fois que le contenu de la page est chargé
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('button-container');
+        const loadingMessage = document.getElementById('loading-message');
+        
+        // On construit l'URL de l'API GitHub pour lister le contenu de la racine du dépôt
+        const apiUrl = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/`;
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(files => {
+                // On s'assure que la réponse est bien un tableau (sinon c'est une erreur)
+                if (!Array.isArray(files)) {
+                    throw new Error("La réponse de l'API n'est pas valide. Vérifiez le nom d'utilisateur et du dépôt.");
+                }
+                
+                // On vide le message de chargement
+                container.innerHTML = '';
+
+                const htmlFiles = files
+                    .filter(file => 
+                        // On ne garde que les fichiers...
+                        file.type === 'file' && 
+                        // ...qui se terminent par .html...
+                        file.name.endsWith('.html') &&
+                        // ...et qui ne sont pas la page d'accueil elle-même.
+                        file.name !== 'index.html'
+                    )
+                    // On peut trier les fichiers par ordre alphabétique
+                    .sort((a, b) => a.name.localeCompare(b.name));
+                
+                if (htmlFiles.length === 0) {
+                    container.innerHTML = '<p>Aucun module trouvé.</p>';
+                    return;
+                }
+
+                // Pour chaque fichier HTML trouvé, on crée un bouton
+                htmlFiles.forEach(file => {
+                    const button = document.createElement('a');
+                    button.href = file.name; // Le lien est simplement le nom du fichier
+                    button.className = 'service-button'; // On applique le style CSS existant
+                    button.textContent = formatFileName(file.name); // Le texte du bouton est le nom formaté
+
+                    container.appendChild(button); // On ajoute le bouton à la grille
+                });
+            })
+            .catch(error => {
+                console.error("Erreur lors de la récupération des fichiers :", error);
+                loadingMessage.textContent = "Erreur: Impossible de charger la liste des modules.";
+            });
+    });
+    </script>
+
+</body>
+</html>
