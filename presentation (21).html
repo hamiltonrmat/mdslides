@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Présentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #2c3e50;
+            color: #ecf0f1;
+            overflow: hidden;
+        }
+        
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slide {
+            width: 90%;
+            max-width: 1200px;
+            height: 80vh;
+            padding: 3rem;
+            background: #34495e;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            display: none;
+            overflow-y: auto;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .slide.active {
+            display: block;
+        }
+        
+        .slide h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: #ecf0f1;
+        }
+        
+        .slide h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.2rem;
+            margin-top: 1.5rem;
+            color: #ecf0f1;
+        }
+        
+        .slide h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            margin-top: 1.2rem;
+        }
+        
+        .slide p {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .slide ul, .slide ol {
+            font-size: 1.3rem;
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .slide li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .slide code {
+            background: #3498db;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .slide pre {
+            background: #282c34;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        
+        .slide pre code {
+            background: none;
+            padding: 0;
+            color: #abb2bf;
+        }
+        
+        .slide img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .slide table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .slide th, .slide td {
+            border: 1px solid #3498db;
+            padding: 0.8rem;
+            text-align: left;
+        }
+        
+        .slide th {
+            background: #3498db;
+            font-weight: bold;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            background: rgba(0,0,0,0.5);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-btn {
+            background: #3498db;
+            color: #ecf0f1;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .nav-btn:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .slide-counter {
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .fullscreen-btn {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        
+        .fullscreen-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="slide active" id="slide-0"><h1>Introduction aux Dérivées</h1>
+<h2>Mesurer la variation</h2></div><div class="slide " id="slide-1"><h2>Au programme aujourd'hui</h2>
+<ul>
+<li><strong>L'intuition</strong> : Comprendre la dérivée comme une pente et une vitesse.</li>
+<li><strong>La rigueur</strong> : Définir la dérivée avec le concept de limite.</li>
+<li><strong>La pratique</strong> : Calculer les premières dérivées à partir de la définition.</li>
+<li><strong>L'application</strong> : Utiliser la dérivée pour étudier une fonction et trouver une tangente.</li>
+</ul></div><div class="slide " id="slide-2"><h2>Définition Intuitive (1/2) : La Pente</h2>
+<p>Comment mesurer la pente d'une courbe en un point <strong>unique</strong> $A$ ?</p>
+<ol>
+<li>On prend un point $B$ très proche. La droite $(AB)$ est une <strong>sécante</strong>.</li>
+<li>La pente de cette sécante est le <strong>taux d'accroissement</strong> :<br />
+    $$ m_{AB} = \frac{\text{variation en y}}{\text{variation en x}} = \frac{f(x_0+h) - f(x_0)}{h} $$</li>
+</ol></div><div class="slide " id="slide-3"><h2>De la Sécante à la Tangente</h2>
+<p>Que se passe-t-il si on rapproche infiniment le point $B$ du point $A$ (en faisant tendre $h$ vers $0$) ?</p>
+<ul>
+<li>La droite sécante $(AB)$ devient la <strong>droite tangente</strong> en $A$.</li>
+<li>La pente de la sécante devient la pente de la tangente.</li>
+</ul>
+<p><strong>Interprétation Géométrique :</strong><br />
+La dérivée $f'(x_0)$ est la <strong>pente de la tangente</strong> à la courbe de $f$ au point d'abscisse $x_0$.</p></div><div class="slide " id="slide-4"><h2>Définition Intuitive (2/2) : La Vitesse</h2>
+<p>Comment mesurer la vitesse à un instant <strong>précis</strong> ?</p>
+<ul>
+<li>
+<p>La <strong>vitesse moyenne</strong> entre $t_0$ et $t_0+h$ est :<br />
+  $$ V_{moy} = \frac{\text{distance}}{\text{temps}} = \frac{p(t_0+h) - p(t_0)}{h} $$</p>
+</li>
+<li>
+<p>En faisant tendre l'intervalle de temps $h$ vers $0$, la vitesse moyenne devient la <strong>vitesse instantanée</strong>.</p>
+</li>
+</ul>
+<p><strong>Interprétation Physique :</strong><br />
+La dérivée d'une fonction de position $p(t)$ est la <strong>vitesse instantanée</strong> à l'instant $t$.</p></div><div class="slide " id="slide-5"><h2>La Grande Idée</h2>
+<p>Pente de la tangente et vitesse instantanée sont deux facettes de la même idée.</p>
+<p>La dérivée mesure un <strong>TAUX DE VARIATION INSTANTANÉ</strong>.</p></div><div class="slide " id="slide-6"><h2>Le Rôle des Limites</h2>
+<p>L'idée de "faire tendre $h$ vers $0$" est formalisée en mathématiques par le concept de <strong>limite</strong>.</p>
+<p>C'est l'outil qui nous permet de passer rigoureusement de l'approximation (sécante, vitesse moyenne) à la valeur exacte (tangente, vitesse instantanée).</p></div><div class="slide " id="slide-7"><h2>Définition Formelle de la Dérivée</h2>
+<p>Soit $f$ une fonction et $x_0$ un point.</p>
+<p>$f$ est <strong>dérivable</strong> en $x_0$ si la limite suivante existe et est finie. Cette limite est la <strong>dérivée de $f$ en $x_0$</strong>, notée $f'(x_0)$.</p>
+<p>$$ f'(x_0) = \lim_{h \to 0} \frac{f(x_0+h) - f(x_0)}{h} $$</p></div><div class="slide " id="slide-8"><h2>La Fonction Dérivée</h2>
+<p>Si une fonction $f$ est dérivable en tout point $x$ d'un intervalle, on peut définir sa <strong>fonction dérivée</strong>, notée $f'$.</p>
+<p>Cette nouvelle fonction $f'(x)$ donne la pente de la tangente à la courbe de $f$ pour n'importe quel point $x$.</p></div><div class="slide " id="slide-9"><h2>Dérivabilité et Continuité</h2>
+<p><strong>Théorème important :</strong><br />
+Si une fonction est <strong>dérivable</strong> en un point, alors elle est <strong>continue</strong> en ce point.</p>
+<p>La dérivabilité est une condition plus "forte" que la continuité.</p></div><div class="slide " id="slide-10"><h2>Attention : La Réciproque est Fausse !</h2>
+<p>Une fonction peut être continue sans être dérivable.</p>
+<p><strong>Exemple classique :</strong> $f(x) = |x|$ en $x_0=0$.<br />
+- La fonction est bien continue.<br />
+- Mais en $0$, il y a un <strong>"point anguleux"</strong>. La pente à gauche (-1) n'est pas la même que la pente à droite (+1). La limite du taux d'accroissement n'existe donc pas.</p></div><div class="slide " id="slide-11"><h2>Premiers calculs par la définition</h2>
+<p>Appliquons la formule $f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}$ à des fonctions simples.</p></div><div class="slide " id="slide-12"><h3>Exemple 1 : Fonction Constante</h3>
+<p>Soit $f(x) = c$.</p>
+<p>$$ f'(x) = \lim_{h \to 0} \frac{c - c}{h} = \lim_{h \to 0} \frac{0}{h} = 0 $$</p>
+<p>La dérivée d'une constante est <strong>0</strong>. (Logique, la pente d'une droite horizontale est nulle).</p></div><div class="slide " id="slide-13"><h3>Exemple 2 : Fonction Linéaire</h3>
+<p>Soit $f(x) = ax+b$.</p>
+<p>$$ f'(x) = \lim_{h \to 0} \frac{a(x+h)+b - (ax+b)}{h} = \lim_{h \to 0} \frac{ah}{h} = a $$</p>
+<p>La dérivée de $ax+b$ est <strong>a</strong>. (Logique, la pente d'une droite est son coefficient directeur).</p></div><div class="slide " id="slide-14"><h3>Exemple 3 : Fonction Carrée</h3>
+<p>Soit $f(x) = x^2$.</p>
+<p>$$ f'(x) = \lim_{h \to 0} \frac{(x+h)^2 - x^2}{h} = \lim_{h \to 0} \frac{x^2+2xh+h^2-x^2}{h} $$<br />
+$$ f'(x) = \lim_{h \to 0} \frac{2xh+h^2}{h} = \lim_{h \to 0} (2x+h) = 2x $$</p>
+<p>La dérivée de $x^2$ est <strong>$2x$</strong>.</p></div><div class="slide " id="slide-15"><h3>Exemple 4 : Fonction Inverse</h3>
+<p>Soit $f(x) = \frac{1}{x}$.</p>
+<p>$$ f'(x) = \lim_{h \to 0} \frac{\frac{1}{x+h} - \frac{1}{x}}{h} = \lim_{h \to 0} \frac{-1}{x(x+h)} = -\frac{1}{x^2} $$</p>
+<p>La dérivée de $\frac{1}{x}$ est <strong>$-\frac{1}{x^2}$</strong>.</p></div><div class="slide " id="slide-16"><h2>Application 1 : Sens de Variation</h2>
+<p>Le signe de la dérivée nous donne le sens de variation de la fonction.</p>
+<ul>
+<li>Si $f'(x) > 0$ sur un intervalle, alors $f$ est <strong>croissante</strong>.</li>
+<li>Si $f'(x) < 0$ sur un intervalle, alors $f$ est <strong>décroissante</strong>.</li>
+<li>Si $f'(x) = 0$, la tangente est horizontale (possible maximum ou minimum).</li>
+</ul></div><div class="slide " id="slide-17"><h2>Application 2 : Équation de la Tangente</h2>
+<p>On peut trouver l'équation de la droite tangente à la courbe de $f$ au point d'abscisse $x_0$.</p>
+<p><strong>Formule :</strong><br />
+$$ y = f'(x_0)(x - x_0) + f(x_0) $$</p>
+<p>Où :<br />
+- $f'(x_0)$ est la <strong>pente</strong>.<br />
+- $(x_0, f(x_0))$ est le <strong>point de contact</strong>.</p></div><div class="slide " id="slide-18"><h2>Conclusion</h2>
+<p>Aujourd'hui, nous avons vu que la dérivée est :<br />
+- <strong>Intuitivement :</strong> Une pente, une vitesse.<br />
+- <strong>Formellement :</strong> La limite d'un taux d'accroissement.<br />
+- <strong>Pratiquement :</strong> Un outil pour étudier les variations d'une fonction.</p>
+<p><strong>Prochainement :</strong> Nous apprendrons les <strong>règles de calcul</strong> pour dériver n'importe quelle fonction sans passer par la limite !</p></div>
+    </div>
+    
+    <button class="fullscreen-btn" onclick="toggleFullscreen()">Plein écran</button>
+    
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Précédent</button>
+        <span class="slide-counter" id="slideCounter">1 / 19</span>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Suivant →</button>
+    </div>
+    
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 19;
+        
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            
+            if (n >= totalSlides) {
+                currentSlide = totalSlides - 1;
+            } else if (n < 0) {
+                currentSlide = 0;
+            } else {
+                currentSlide = n;
+            }
+            
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+            
+            document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+            
+            // Re-render MathJax pour la nouvelle slide
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise();
+            }
+            
+            // Highlight code blocks
+            document.querySelectorAll('.slide.active pre code').forEach((block) => {
+                hljs.highlightElement(block);
+            });
+        }
+        
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+        
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+        
+        // Navigation au clavier
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (e.key === 'ArrowRight' || e.key === ' ') {
+                changeSlide(1);
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            }
+        });
+        
+        // Initialiser
+        showSlide(0);
+        hljs.highlightAll();
+    </script>
+</body>
+</html>
