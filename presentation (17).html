@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Présentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #2c3e50;
+            color: #ecf0f1;
+            overflow: hidden;
+        }
+        
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slide {
+            width: 90%;
+            max-width: 1200px;
+            height: 80vh;
+            padding: 3rem;
+            background: #34495e;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            display: none;
+            overflow-y: auto;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .slide.active {
+            display: block;
+        }
+        
+        .slide h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: #ecf0f1;
+        }
+        
+        .slide h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.2rem;
+            margin-top: 1.5rem;
+            color: #ecf0f1;
+        }
+        
+        .slide h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            margin-top: 1.2rem;
+        }
+        
+        .slide p {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .slide ul, .slide ol {
+            font-size: 1.3rem;
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .slide li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .slide code {
+            background: #3498db;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .slide pre {
+            background: #282c34;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        
+        .slide pre code {
+            background: none;
+            padding: 0;
+            color: #abb2bf;
+        }
+        
+        .slide img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .slide table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .slide th, .slide td {
+            border: 1px solid #3498db;
+            padding: 0.8rem;
+            text-align: left;
+        }
+        
+        .slide th {
+            background: #3498db;
+            font-weight: bold;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            background: rgba(0,0,0,0.5);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-btn {
+            background: #3498db;
+            color: #ecf0f1;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .nav-btn:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .slide-counter {
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .fullscreen-btn {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        
+        .fullscreen-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="slide active" id="slide-0"><h1>Trigonométrie</h1>
+<h2>Une introduction</h2></div><div class="slide " id="slide-1"><h2>Objectifs du cours</h2>
+<ul>
+<li>Définir et calculer <strong>sinus</strong>, <strong>cosinus</strong> et <strong>tangente</strong> dans un triangle rectangle.</li>
+<li>Appliquer les relations fondamentales de la trigonométrie.</li>
+<li>Connaître les valeurs pour les <strong>angles remarquables</strong>.</li>
+<li>Utiliser la trigonométrie pour résoudre des problèmes simples.</li>
+<li>Comprendre l'extension des concepts au <strong>cercle trigonométrique</strong>.</li>
+</ul></div><div class="slide " id="slide-2"><h2>Pourquoi la Trigonométrie ?</h2>
+<p>Du grec <em>trigonon</em> (triangle) et <em>metron</em> (mesure), c'est la "mesure des triangles".</p>
+<p>C'est un outil indispensable en :<br />
+- <strong>Physique</strong> (mécanique, ondes)<br />
+- <strong>Génie électrique</strong> (signaux)<br />
+- <strong>Informatique</strong> (graphisme 3D)<br />
+- <strong>Robotique</strong> et <strong>Génie civil</strong></p>
+<p>Elle permet de modéliser des phénomènes périodiques, de calculer des distances inaccessibles et de décrire des rotations.</p></div><div class="slide " id="slide-3"><h1>Le Triangle Rectangle</h1>
+<p>Le point de départ de toute la trigonométrie.</p>
+<p><strong>Définition :</strong> Un triangle avec un angle droit (90°).<br />
+- Le côté opposé à l'angle droit est l'<strong>hypoténuse</strong> (le plus long).<br />
+- Les deux autres sont les <strong>côtés de l'angle droit</strong> (ou cathètes).</p>
+<p><img alt="Triangle rectangle" src="https://upload.wikimedia.org/wikipedia/commons/7/72/Triangle_rectangle_abc.svg" /></p></div><div class="slide " id="slide-4"><h2>Côté Opposé et Côté Adjacent</h2>
+<p>Pour un angle $\theta$ donné :</p>
+<ul>
+<li>Le <strong>côté opposé</strong> est le côté en face de l'angle $\theta$.</li>
+<li>Le <strong>côté adjacent</strong> est le côté qui touche l'angle $\theta$ (et qui n'est pas l'hypoténuse).</li>
+</ul></div><div class="slide " id="slide-5"><h2>Le Sinus (sin)</h2>
+<p>Le <strong>sinus</strong> est le rapport entre le côté <strong>opposé</strong> et l'<strong>hypoténuse</strong>.</p>
+<p>$$ \sin(\theta) = \frac{\text{Côté opposé}}{\text{Hypoténuse}} $$</p>
+<p>C'est une mesure de la "hauteur" du triangle par rapport à son hypoténuse.</p></div><div class="slide " id="slide-6"><h2>Le Cosinus (cos)</h2>
+<p>Le <strong>cosinus</strong> est le rapport entre le côté <strong>adjacent</strong> et l'<strong>hypoténuse</strong>.</p>
+<p>$$ \cos(\theta) = \frac{\text{Côté adjacent}}{\text{Hypoténuse}} $$</p>
+<p>C'est une mesure de la "largeur" du triangle par rapport à son hypoténuse.</p></div><div class="slide " id="slide-7"><h2>La Tangente (tan)</h2>
+<p>La <strong>tangente</strong> est le rapport entre le côté <strong>opposé</strong> et le côté <strong>adjacent</strong>.</p>
+<p>$$ \tan(\theta) = \frac{\text{Côté opposé}}{\text{Côté adjacent}} $$</p>
+<p>Elle représente la "pente" de l'hypoténuse.</p></div><div class="slide " id="slide-8"><h2>Exemple de Calcul</h2>
+<p>Soit un triangle rectangle avec les côtés de longueurs 3, 4 et 5.</p>
+<p>Pour l'angle $\theta$ :<br />
+- <strong>Opposé</strong> = 3<br />
+- <strong>Adjacent</strong> = 4<br />
+- <strong>Hypoténuse</strong> = 5</p>
+<p>Calculs :<br />
+- $\sin(\theta) = \frac{3}{5} = 0.6$<br />
+- $\cos(\theta) = \frac{4}{5} = 0.8$<br />
+- $\tan(\theta) = \frac{3}{4} = 0.75$</p></div><div class="slide " id="slide-9"><h1>Propriétés Fondamentales</h1></div><div class="slide " id="slide-10"><h2>Identité 1 : La Relation Fondamentale</h2>
+<p>Pour n'importe quel angle $\theta$ :</p>
+<p>$$ \sin^2(\theta) + \cos^2(\theta) = 1 $$</p>
+<p>Cette relation découle directement du <strong>théorème de Pythagore</strong> ($a^2 + o^2 = h^2$) appliqué aux définitions du sinus et du cosinus.</p></div><div class="slide " id="slide-11"><h2>Identité 2 : Relation avec la Tangente</h2>
+<p>Pour tout angle $\theta$ où $\cos(\theta) \neq 0$ :</p>
+<p>$$ \tan(\theta) = \frac{\sin(\theta)}{\cos(\theta)} $$</p>
+<p>La tangente est littéralement le rapport du sinus sur le cosinus.</p></div><div class="slide " id="slide-12"><h2>Application des Identités</h2>
+<p>Si on sait que $\sin(\theta) = 0.6$ pour un angle aigu :</p>
+<ol>
+<li>
+<p><strong>Trouver le cosinus :</strong><br />
+    $\cos^2(\theta) = 1 - \sin^2(\theta) = 1 - (0.6)^2 = 1 - 0.36 = 0.64$<br />
+    $\cos(\theta) = \sqrt{0.64} = 0.8$</p>
+</li>
+<li>
+<p><strong>Trouver la tangente :</strong><br />
+    $\tan(\theta) = \frac{\sin(\theta)}{\cos(\theta)} = \frac{0.6}{0.8} = 0.75$</p>
+</li>
+</ol></div><div class="slide " id="slide-13"><h1>Les Angles Remarquables</h1>
+<p>Ce sont des valeurs à connaître par cœur, car elles apparaissent très souvent.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Angle $\theta$</th>
+<th style="text-align: center;">$0^\circ$</th>
+<th style="text-align: center;">$30^\circ$</th>
+<th style="text-align: center;">$45^\circ$</th>
+<th style="text-align: center;">$60^\circ$</th>
+<th style="text-align: center;">$90^\circ$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">$\sin(\theta)$</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">$1/2$</td>
+<td style="text-align: center;">$\sqrt{2}/2$</td>
+<td style="text-align: center;">$\sqrt{3}/2$</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: center;">$\cos(\theta)$</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$\sqrt{3}/2$</td>
+<td style="text-align: center;">$\sqrt{2}/2$</td>
+<td style="text-align: center;">$1/2$</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td style="text-align: center;">$\tan(\theta)$</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">$\sqrt{3}/3$</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">$\sqrt{3}$</td>
+<td style="text-align: center;">Indéfini</td>
+</tr>
+</tbody>
+</table></div><div class="slide " id="slide-14"><h2>Astuce de Mémorisation</h2>
+<p>Pour retenir la ligne du <strong>sinus</strong> pour $0, 30, 45, 60, 90^\circ$ :</p>
+<p>$$ \frac{\sqrt{0}}{2}, \frac{\sqrt{1}}{2}, \frac{\sqrt{2}}{2}, \frac{\sqrt{3}}{2}, \frac{\sqrt{4}}{2} $$</p>
+<ul>
+<li>La ligne du <strong>cosinus</strong> est la même, mais lue à l'envers.</li>
+<li>La ligne de la <strong>tangente</strong> s'obtient en divisant le sinus par le cosinus.</li>
+</ul></div><div class="slide " id="slide-15"><h1>Au-delà du Triangle : Le Cercle Trigonométrique</h1>
+<p>Pour définir la trigonométrie pour <strong>tous les angles</strong> (y compris $> 90^\circ$ ou négatifs), on utilise le cercle trigonométrique.</p>
+<p><strong>Définition :</strong> Un cercle de rayon 1 centré à l'origine (0,0).</p></div><div class="slide " id="slide-16"><h2>Sinus et Cosinus sur le Cercle</h2>
+<p>Pour un point $M$ sur le cercle formant un angle $\theta$ avec l'axe horizontal :</p>
+<p>Les coordonnées du point $M(x, y)$ sont <strong>définies</strong> par :</p>
+<ul>
+<li>$x = \cos(\theta)$</li>
+<li>$y = \sin(\theta)$</li>
+</ul>
+<p>La relation $\cos^2(\theta) + \sin^2(\theta) = 1$ devient l'équation du cercle : $x^2 + y^2 = 1$.</p></div><div class="slide " id="slide-17"><h2>Les Radians</h2>
+<p>En ingénierie et en sciences, on préfère les <strong>radians</strong> aux degrés.<br />
+Le radian est la mesure de l'angle correspondant à un arc de longueur 1 sur un cercle de rayon 1.</p>
+<p><strong>Conversions clés :</strong><br />
+- $360^\circ = 2\pi$ radians<br />
+- $180^\circ = \pi$ radians<br />
+- $90^\circ = \pi/2$ radians<br />
+- $45^\circ = \pi/4$ radians<br />
+- $30^\circ = \pi/6$ radians</p></div><div class="slide " id="slide-18"><h1>Applications Simples</h1>
+<p>Résoudre des problèmes concrets en utilisant les rapports trigonométriques.</p></div><div class="slide " id="slide-19"><h2>Exemple 1 : Calculer une hauteur</h2>
+<p>Un observateur est à <strong>50 m</strong> d'un arbre. L'angle d'élévation vers le sommet est de <strong>35°</strong>. Quelle est la hauteur <code>h</code> de l'arbre ?</p>
+<ul>
+<li>Côté <strong>adjacent</strong> = 50 m</li>
+<li>Côté <strong>opposé</strong> = <code>h</code> (ce que l'on cherche)</li>
+</ul>
+<p>On utilise la <strong>tangente</strong> :<br />
+$$ \tan(35^\circ) = \frac{\text{opposé}}{\text{adjacent}} = \frac{h}{50} $$<br />
+$$ h = 50 \times \tan(35^\circ) \approx 50 \times 0.7002 $$<br />
+$$ h \approx 35 \text{ mètres} $$</p></div><div class="slide " id="slide-20"><h2>Exemple 2 : Calculer un angle</h2>
+<p>Un toboggan de <strong>6 m</strong> de long atteint une hauteur de <strong>3 m</strong>. Quel est son angle d'inclinaison $\alpha$ ?</p>
+<ul>
+<li><strong>Hypoténuse</strong> = 6 m</li>
+<li>Côté <strong>opposé</strong> = 3 m</li>
+</ul>
+<p>On utilise le <strong>sinus</strong> :<br />
+$$ \sin(\alpha) = \frac{\text{opposé}}{\text{hypoténuse}} = \frac{3}{6} = \frac{1}{2} $$</p>
+<p>Quel angle a un sinus de 1/2 ? C'est un angle remarquable !<br />
+$$ \alpha = 30^\circ $$</p></div><div class="slide " id="slide-21"><h2>Résumé des Points Clés</h2>
+<ul>
+<li><strong>SOH CAH TOA</strong> :</li>
+<li><strong>S</strong>in = <strong>O</strong>pposé / <strong>H</strong>ypoténuse</li>
+<li><strong>C</strong>os = <strong>A</strong>djacent / <strong>H</strong>ypoténuse</li>
+<li><strong>T</strong>an = <strong>O</strong>pposé / <strong>A</strong>djacent</li>
+<li><strong>Identités Fondamentales</strong> :</li>
+<li>$\sin^2(\theta) + \cos^2(\theta) = 1$</li>
+<li>$\tan(\theta) = \sin(\theta) / \cos(\theta)$</li>
+<li>Le <strong>Cercle Trigonométrique</strong> généralise ces concepts à tous les angles.</li>
+</ul></div><div class="slide " id="slide-22"><h1>Fin de l'Introduction</h1>
+<p>Merci !</p>
+<p><strong>Auteur :</strong> Hamilton DE ARAUJO</p></div>
+    </div>
+    
+    <button class="fullscreen-btn" onclick="toggleFullscreen()">Plein écran</button>
+    
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Précédent</button>
+        <span class="slide-counter" id="slideCounter">1 / 23</span>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Suivant →</button>
+    </div>
+    
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 23;
+        
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            
+            if (n >= totalSlides) {
+                currentSlide = totalSlides - 1;
+            } else if (n < 0) {
+                currentSlide = 0;
+            } else {
+                currentSlide = n;
+            }
+            
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+            
+            document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+            
+            // Re-render MathJax pour la nouvelle slide
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise();
+            }
+            
+            // Highlight code blocks
+            document.querySelectorAll('.slide.active pre code').forEach((block) => {
+                hljs.highlightElement(block);
+            });
+        }
+        
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+        
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+        
+        // Navigation au clavier
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (e.key === 'ArrowRight' || e.key === ' ') {
+                changeSlide(1);
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            }
+        });
+        
+        // Initialiser
+        showSlide(0);
+        hljs.highlightAll();
+    </script>
+</body>
+</html>
