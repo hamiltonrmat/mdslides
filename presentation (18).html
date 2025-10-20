@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Présentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #2c3e50;
+            color: #ecf0f1;
+            overflow: hidden;
+        }
+        
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slide {
+            width: 90%;
+            max-width: 1200px;
+            height: 80vh;
+            padding: 3rem;
+            background: #34495e;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            display: none;
+            overflow-y: auto;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .slide.active {
+            display: block;
+        }
+        
+        .slide h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: #ecf0f1;
+        }
+        
+        .slide h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.2rem;
+            margin-top: 1.5rem;
+            color: #ecf0f1;
+        }
+        
+        .slide h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            margin-top: 1.2rem;
+        }
+        
+        .slide p {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        
+        .slide ul, .slide ol {
+            font-size: 1.3rem;
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .slide li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .slide code {
+            background: #3498db;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .slide pre {
+            background: #282c34;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        
+        .slide pre code {
+            background: none;
+            padding: 0;
+            color: #abb2bf;
+        }
+        
+        .slide img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .slide table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .slide th, .slide td {
+            border: 1px solid #3498db;
+            padding: 0.8rem;
+            text-align: left;
+        }
+        
+        .slide th {
+            background: #3498db;
+            font-weight: bold;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            background: rgba(0,0,0,0.5);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-btn {
+            background: #3498db;
+            color: #ecf0f1;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .nav-btn:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .slide-counter {
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            min-width: 80px;
+            text-align: center;
+        }
+        
+        .fullscreen-btn {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+        
+        .fullscreen-btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="slide active" id="slide-0"><h1>Relations Trigonométriques Fondamentales</h1>
+<h2>Maîtriser les formules clés</h2></div><div class="slide " id="slide-1"><h2>Objectifs du chapitre</h2>
+<ul>
+<li>Définir les fonctions trigonométriques sur le <strong>cercle unitaire</strong>.</li>
+<li>Appliquer les <strong>relations fondamentales</strong> (Pythagore, etc.).</li>
+<li>Utiliser les formules d'<strong>addition</strong>, de <strong>duplication</strong> et de <strong>linéarisation</strong>.</li>
+<li>Résoudre des <strong>équations trigonométriques</strong> simples.</li>
+<li><strong>Simplifier</strong> des expressions complexes.</li>
+</ul></div><div class="slide " id="slide-2"><h2>Rappel : Le Cercle Trigonométrique</h2>
+<p>C'est l'outil essentiel pour visualiser toutes les relations.</p>
+<ul>
+<li>Cercle de <strong>rayon 1</strong>, centré à l'origine (0,0).</li>
+<li>L'axe des abscisses (x) est l'axe des <strong>cosinus</strong>.</li>
+<li>L'axe des ordonnées (y) est l'axe des <strong>sinus</strong>.</li>
+<li>Les angles sont mesurés en <strong>radians</strong>.</li>
+</ul></div><div class="slide " id="slide-3"><h2>Définitions : Sinus et Cosinus</h2>
+<p>Pour tout angle réel $x$, on associe un point $M(x_M, y_M)$ sur le cercle.</p>
+<ul>
+<li>Le <strong>cosinus</strong> de $x$ est l'<strong>abscisse</strong> du point $M$.<br />
+  $$ \cos(x) = x_M $$</li>
+<li>Le <strong>sinus</strong> de $x$ est l'<strong>ordonnée</strong> du point $M$.<br />
+  $$ \sin(x) = y_M $$</li>
+</ul>
+<p><strong>Propriétés :</strong><br />
+- $-1 \le \cos(x) \le 1$ et $-1 \le \sin(x) \le 1$<br />
+- Périodicité de $2\pi$ : $\cos(x+2k\pi) = \cos(x)$</p></div><div class="slide " id="slide-4"><h2>Définitions : Tangente et autres</h2>
+<p>Ces fonctions sont définies à partir du sinus et du cosinus.</p>
+<ul>
+<li><strong>Tangente :</strong><br />
+  $$ \tan(x) = \frac{\sin(x)}{\cos(x)} \quad (\text{si } \cos(x) \ne 0) $$</li>
+<li><strong>Cotangente :</strong><br />
+  $$ \cot(x) = \frac{\cos(x)}{\sin(x)} = \frac{1}{\tan(x)} $$</li>
+<li><strong>Sécante :</strong><br />
+  $$ \sec(x) = \frac{1}{\cos(x)} $$</li>
+<li><strong>Cosécante :</strong><br />
+  $$ \csc(x) = \frac{1}{\sin(x)} $$</li>
+</ul></div><div class="slide " id="slide-5"><h2>Valeurs Remarquables</h2>
+<p>Les valeurs à connaître par cœur (en radians) !</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">$x$ (rad)</th>
+<th style="text-align: center;">$0$</th>
+<th style="text-align: center;">$\frac{\pi}{6}$</th>
+<th style="text-align: center;">$\frac{\pi}{4}$</th>
+<th style="text-align: center;">$\frac{\pi}{3}$</th>
+<th style="text-align: center;">$\frac{\pi}{2}$</th>
+<th style="text-align: center;">$\pi$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>$\cos(x)$</strong></td>
+<td style="text-align: center;">$1$</td>
+<td style="text-align: center;">$\frac{\sqrt{3}}{2}$</td>
+<td style="text-align: center;">$\frac{\sqrt{2}}{2}$</td>
+<td style="text-align: center;">$\frac{1}{2}$</td>
+<td style="text-align: center;">$0$</td>
+<td style="text-align: center;">$-1$</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>$\sin(x)$</strong></td>
+<td style="text-align: center;">$0$</td>
+<td style="text-align: center;">$\frac{1}{2}$</td>
+<td style="text-align: center;">$\frac{\sqrt{2}}{2}$</td>
+<td style="text-align: center;">$\frac{\sqrt{3}}{2}$</td>
+<td style="text-align: center;">$1$</td>
+<td style="text-align: center;">$0$</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>$\tan(x)$</strong></td>
+<td style="text-align: center;">$0$</td>
+<td style="text-align: center;">$\frac{\sqrt{3}}{3}$</td>
+<td style="text-align: center;">$1$</td>
+<td style="text-align: center;">$\sqrt{3}$</td>
+<td style="text-align: center;">Indéfini</td>
+<td style="text-align: center;">$0$</td>
+</tr>
+</tbody>
+</table></div><div class="slide " id="slide-6"><h1>Relations Fondamentales</h1></div><div class="slide " id="slide-7"><h2>La Relation de Pythagore</h2>
+<p>C'est la relation la plus importante, directement issue de l'équation du cercle unitaire ($x^2 + y^2 = 1$).</p>
+<p>Pour tout angle réel $x$ :<br />
+$$ \cos^2(x) + \sin^2(x) = 1 $$</p></div><div class="slide " id="slide-8"><h2>Relations avec la Tangente</h2>
+<p>En divisant la relation de Pythagore par $\cos^2(x)$ ou $\sin^2(x)$, on obtient :</p>
+<ol>
+<li>
+<p>$$ 1 + \tan^2(x) = \frac{1}{\cos^2(x)} = \sec^2(x) $$</p>
+</li>
+<li>
+<p>$$ 1 + \cot^2(x) = \frac{1}{\sin^2(x)} = \csc^2(x) $$</p>
+</li>
+</ol></div><div class="slide " id="slide-9"><h1>Les Angles Associés</h1>
+<p>Pour simplifier des expressions en reliant un angle $x$ à $-x$, $\pi-x$, etc.</p></div><div class="slide " id="slide-10"><h2>Angles Opposés et Complémentaires</h2>
+<p><strong>Angles opposés</strong> (symétrie / axe x) :<br />
+- $\cos(-x) = \cos(x)$  (<em>paire</em>)<br />
+- $\sin(-x) = -\sin(x)$ (<em>impaire</em>)</p>
+<p><strong>Angles complémentaires</strong> (symétrie / droite y=x) :<br />
+- $\cos\left(\frac{\pi}{2}-x\right) = \sin(x)$<br />
+- $\sin\left(\frac{\pi}{2}-x\right) = \cos(x)$</p></div><div class="slide " id="slide-11"><h2>Angles Supplémentaires et Décalés</h2>
+<p><strong>Angles supplémentaires</strong> (symétrie / axe y) :<br />
+- $\cos(\pi-x) = -\cos(x)$<br />
+- $\sin(\pi-x) = \sin(x)$</p>
+<p><strong>Angles décalés de $\pi$</strong> (symétrie / origine) :<br />
+- $\cos(\pi+x) = -\cos(x)$<br />
+- $\sin(\pi+x) = -\sin(x)$</p>
+<p><strong>Note :</strong> La tangente est $\pi$-périodique : $\tan(\pi+x) = \tan(x)$.</p></div><div class="slide " id="slide-12"><h1>Formules d'Addition et de Duplication</h1></div><div class="slide " id="slide-13"><h2>Formules d'Addition</h2>
+<p>Essentielles pour calculer les fonctions trigonométriques de $a+b$ ou $a-b$.</p>
+<p>$$ \cos(a \pm b) = \cos(a)\cos(b) \mp \sin(a)\sin(b) $$<br />
+$$ \sin(a \pm b) = \sin(a)\cos(b) \pm \cos(a)\sin(b) $$</p>
+<p><strong>Astuce :</strong> Pour $\cos$, le signe change. Pour $\sin$, le signe est le même.</p></div><div class="slide " id="slide-14"><h2>Formules d'Addition (suite) : Tangente</h2>
+<p>$$ \tan(a+b) = \frac{\tan(a) + \tan(b)}{1 - \tan(a)\tan(b)} $$<br />
+<br><br />
+$$ \tan(a-b) = \frac{\tan(a) - \tan(b)}{1 + \tan(a)\tan(b)} $$</p></div><div class="slide " id="slide-15"><h2>Application : Calcul de $\cos(\frac{\pi}{12})$</h2>
+<p>On utilise $\frac{\pi}{12} = \frac{\pi}{3} - \frac{\pi}{4}$ et la formule $\cos(a-b)$.</p>
+<p>$$ \cos\left(\frac{\pi}{3} - \frac{\pi}{4}\right) = \cos\left(\frac{\pi}{3}\right)\cos\left(\frac{\pi}{4}\right) + \sin\left(\frac{\pi}{3}\right)\sin\left(\frac{\pi}{4}\right) $$<br />
+$$ = \left(\frac{1}{2}\right)\left(\frac{\sqrt{2}}{2}\right) + \left(\frac{\sqrt{3}}{2}\right)\left(\frac{\sqrt{2}}{2}\right) $$<br />
+$$ = \frac{\sqrt{2}+\sqrt{6}}{4} $$</p></div><div class="slide " id="slide-16"><h2>Formules de Duplication (Arc Double)</h2>
+<p>Un cas particulier des formules d'addition où $a=b=x$.</p>
+<p>$$ \sin(2x) = 2\sin(x)\cos(x) $$<br />
+<br><br />
+$$ \cos(2x) = \cos^2(x) - \sin^2(x) $$<br />
+$$ \cos(2x) = 2\cos^2(x) - 1 $$<br />
+$$ \cos(2x) = 1 - 2\sin^2(x) $$</p></div><div class="slide " id="slide-17"><h2>Formules de Linéarisation</h2>
+<p>Très utiles en calcul intégral pour réduire les puissances. On les obtient en inversant les formules de duplication de $\cos(2x)$.</p>
+<p>$$ \cos^2(x) = \frac{1 + \cos(2x)}{2} $$<br />
+<br><br />
+$$ \sin^2(x) = \frac{1 - \cos(2x)}{2} $$</p></div><div class="slide " id="slide-18"><h2>Transformation : Somme vers Produit</h2>
+<p>Permet de factoriser des expressions trigonométriques.</p>
+<ul>
+<li>$\cos(p) + \cos(q) = 2\cos\left(\frac{p+q}{2}\right)\cos\left(\frac{p-q}{2}\right)$</li>
+<li>$\sin(p) + \sin(q) = 2\sin\left(\frac{p+q}{2}\right)\cos\left(\frac{p-q}{2}\right)$</li>
+</ul>
+<p><em>(Il en existe d'autres pour les différences)</em></p></div><div class="slide " id="slide-19"><h2>Application 1 : Simplification d'expression</h2>
+<p>Simplifier $A = \frac{\sin(2x)}{1+\cos(2x)}$</p>
+<p>On utilise $\sin(2x) = 2\sin(x)\cos(x)$ et $1+\cos(2x) = 2\cos^2(x)$.</p>
+<p>$$ A = \frac{2\sin(x)\cos(x)}{2\cos^2(x)} $$</p>
+<p>En simplifiant par $2\cos(x)$ :<br />
+$$ A = \frac{\sin(x)}{\cos(x)} = \tan(x) $$</p></div><div class="slide " id="slide-20"><h2>Application 2 : Résolution d'équation</h2>
+<p>Résoudre $\cos(x) = \sin(x)$ pour $x \in [0, 2\pi[$.</p>
+<p>Si $\cos(x) \ne 0$, on peut diviser :<br />
+$$ \frac{\sin(x)}{\cos(x)} = 1 \implies \tan(x) = 1 $$</p>
+<p>Les angles dont la tangente est 1 sont :<br />
+- $x = \frac{\pi}{4}$<br />
+- $x = \frac{\pi}{4} + \pi = \frac{5\pi}{4}$</p>
+<p>Les solutions sont donc $x = \frac{\pi}{4}$ et $x = \frac{5\pi}{4}$.</p></div><div class="slide " id="slide-21"><h2>En Résumé</h2>
+<p>Les outils à maîtriser :<br />
+- <strong>Relation de Pythagore</strong> : $\cos^2(x) + \sin^2(x) = 1$<br />
+- <strong>Angles associés</strong> pour simplifier les calculs.<br />
+- <strong>Formules d'addition</strong> pour décomposer les angles.<br />
+- <strong>Formules de duplication</strong> et de <strong>linéarisation</strong> pour manipuler les expressions.</p>
+<p>Ces formules sont le langage des phénomènes périodiques en sciences et en ingénierie.</p></div><div class="slide " id="slide-22"><h1>Merci !</h1>
+<p><strong>Auteur :</strong> Hamilton DE ARAUJO</p></div>
+    </div>
+    
+    <button class="fullscreen-btn" onclick="toggleFullscreen()">Plein écran</button>
+    
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Précédent</button>
+        <span class="slide-counter" id="slideCounter">1 / 23</span>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Suivant →</button>
+    </div>
+    
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 23;
+        
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            
+            if (n >= totalSlides) {
+                currentSlide = totalSlides - 1;
+            } else if (n < 0) {
+                currentSlide = 0;
+            } else {
+                currentSlide = n;
+            }
+            
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+            
+            document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+            
+            // Re-render MathJax pour la nouvelle slide
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise();
+            }
+            
+            // Highlight code blocks
+            document.querySelectorAll('.slide.active pre code').forEach((block) => {
+                hljs.highlightElement(block);
+            });
+        }
+        
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+        
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+        
+        // Navigation au clavier
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (e.key === 'ArrowRight' || e.key === ' ') {
+                changeSlide(1);
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            }
+        });
+        
+        // Initialiser
+        showSlide(0);
+        hljs.highlightAll();
+    </script>
+</body>
+</html>
