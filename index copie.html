@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title></title>
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/consult.css" id="theme" />
+    <link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="css/layout.css" />
+	<link rel="stylesheet" href="plugin/customcontrols/style.css">
+
+
+
+    <script defer src="dist/fontawesome/all.min.js"></script>
+
+	<script type="text/javascript">
+		var forgetPop = true;
+		function onPopState(event) {
+			if(forgetPop){
+				forgetPop = false;
+			} else {
+				parent.postMessage(event.target.location.href, "app://obsidian.md");
+			}
+        }
+		window.onpopstate = onPopState;
+		window.onmessage = event => {
+			if(event.data == "reload"){
+				window.document.location.reload();
+			}
+			forgetPop = true;
+		}
+
+		function fitElements(){
+			const itemsToFit = document.getElementsByClassName('fitText');
+			for (const item in itemsToFit) {
+				if (Object.hasOwnProperty.call(itemsToFit, item)) {
+					var element = itemsToFit[item];
+					fitElement(element,1, 1000);
+					element.classList.remove('fitText');
+				}
+			}
+		}
+
+		function fitElement(element, start, end){
+
+			let size = (end + start) / 2;
+			element.style.fontSize = `${size}px`;
+
+			if(Math.abs(start - end) < 1){
+				while(element.scrollHeight > element.offsetHeight){
+					size--;
+					element.style.fontSize = `${size}px`;
+				}
+				return;
+			}
+
+			if(element.scrollHeight > element.offsetHeight){
+				fitElement(element, start, size);
+			} else {
+				fitElement(element, size, end);
+			}		
+		}
+
+
+		document.onreadystatechange = () => {
+			fitElements();
+			if (document.readyState === 'complete') {
+				if (window.location.href.indexOf("?export") != -1){
+					parent.postMessage(event.target.location.href, "app://obsidian.md");
+				}
+				if (window.location.href.indexOf("print-pdf") != -1){
+					let stateCheck = setInterval(() => {
+						clearInterval(stateCheck);
+						window.print();
+					}, 250);
+				}
+			}
+	};
+
+
+        </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Introduction aux Dérivées : Mesurer la variation
+
+<div class="callout callout-color-default">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-pencil-alt" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Fil directeur
+
+</div>
+</div>
+<div class="callout-content">
+
+Dans ce cours, nous allons démystifier la notion de dérivée, en partant d'une intuition géométrique et physique, pour arriver à sa définition formelle rigoureuse. Nous explorerons ensuite ses premières applications et jetterons les bases des chapitres futurs.
+
+</div>
+</div>
+
+>[!example] Contenu de ce cours
+>Avant de plonger dans les dérivées, il est crucial de maîtriser les concepts liés aux **fonctions réelles** :
+> *   Définition d'une fonction, domaine de définition, image.
+> *   Représentation graphique de fonctions.
+>*   Notion de limite d'une fonction en un point et à l'infini.
+>*   Continuité d'une fonction.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Définition Intuitive : Pente et Vitesse
+
+Commençons par une approche concrète pour saisir ce que représente une dérivée.
+
+## Pente d'une courbe et tangente
+
+Imaginez le graphique d'une fonction `$f(x)$`. Si vous marchez sur cette courbe, la pente de votre chemin change constamment. Comment mesurer cette pente en un point précis ?
+
+Considérons un point `$A(x_0, f(x_0))$` sur la courbe de `$f$`. Si nous prenons un deuxième point `$B(x_0+h, f(x_0+h))$` très proche de `$A$`, la droite qui relie `$A$` et `$B$` est une **sécante**.
+
+La pente de cette sécante `$AB$` est donnée par le taux d'accroissement :
+`$ m_{AB} = \frac{\Delta y}{\Delta x} = \frac{f(x_0+h) - f(x_0)}{(x_0+h) - x_0} = \frac{f(x_0+h) - f(x_0)}{h} $`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+Maintenant, si nous rapprochons le point `$B$` de `$A$`, c'est-à-dire si nous faisons tendre `$h$` vers `$0$`, la sécante `$AB$` va se rapprocher de la **tangente** à la courbe au point `$A$`. La pente de cette tangente est précisément ce que nous cherchons à définir comme la dérivée.
+
+<div class="callout callout-color-default">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-pencil-alt" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Interprétation Géométrique
+
+</div>
+</div>
+<div class="callout-content">
+
+La dérivée d'une fonction `$f$` en un point `$x_0$`, notée `$f'(x_0)$`, représente la **pente de la tangente** à la courbe de `$f$` au point d'abscisse `$x_0$`.
+
+</div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Vitesse instantanée
+
+Considérons un objet se déplaçant le long d'un axe. Sa position à l'instant `$t$` est donnée par une fonction `$p(t)$`.
+
+*   La **vitesse moyenne** entre deux instants `$t_0$` et `$t_0+h$` est :
+    `$ V_{moy} = \frac{\text{distance parcourue}}{\text{temps écoulé}} = \frac{p(t_0+h) - p(t_0)}{(t_0+h) - t_0} = \frac{p(t_0+h) - p(t_0)}{h} $`
+*   Si nous voulons connaître la **vitesse instantanée** de l'objet à l'instant `$t_0$`, nous devons faire tendre l'intervalle de temps `$h$` vers `$0$`. La vitesse instantanée est alors la limite de la vitesse moyenne lorsque `$h \to 0$`.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="callout callout-color-default">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-pencil-alt" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Interprétation Physique
+
+</div>
+</div>
+<div class="callout-content">
+
+La dérivée d'une fonction de position `$p(t)$` par rapport au temps `$t$` représente la **vitesse instantanée** de l'objet à l'instant `$t$`. C'est le taux de variation instantané de la position.
+
+</div>
+</div>
+
+<div class="callout callout-color-default">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-pencil-alt" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Lien entre Pente et Vitesse
+
+</div>
+</div>
+<div class="callout-content">
+
+Ces deux exemples, l'un géométrique et l'autre physique, convergent vers la même idée : la dérivée mesure un **taux de variation instantané**. C'est la pente d'une courbe en un point ou la vitesse d'un changement à un instant précis.
+
+</div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Le Concept de Calcul Infinitésimal
+
+L'idée de "faire tendre `$h$` vers `$0$`" est au cœur du calcul infinitésimal, la branche des mathématiques qui étudie les quantités "infiniment petites" et leurs variations.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### 2.1. Qu'est-ce qu'un "infiniment petit" ?
+
+Historiquement, les mathématiciens comme Newton et Leibniz ont développé le calcul en manipulant des quantités "infinitésimales", des nombres non nuls mais plus petits que n'importe quel nombre réel positif. Aujourd'hui, cette notion est rigoureusement définie par la théorie des limites.
+
+Lorsque nous disons que `$h$` "tend vers `$0$`", cela signifie que `$h$` devient arbitrairement proche de `$0$`, sans jamais être exactement `$0$`. Cela nous permet d'analyser le comportement d'une fonction dans le voisinage immédiat d'un point.
+
+<div class="callout callout-color5">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-exclamation-triangle" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Attention
+
+</div>
+</div>
+<div class="callout-content">
+
+Ne confondez pas un "infiniment petit" (une quantité qui tend vers zéro) avec zéro lui-même. La division par zéro est indéfinie. C'est pourquoi nous utilisons la notion de limite pour évaluer ces expressions.
+
+</div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Le rôle des limites
+
+La notion de limite est le fondement rigoureux du calcul différentiel. Elle permet de donner un sens précis à l'idée de "rapprochement" et de "tendance".
+Pour calculer la dérivée, nous allons évaluer la limite du taux d'accroissement lorsque l'intervalle de variation `$h$` devient infinitésimal.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Définition Formelle de la Dérivée
+
+Maintenant que nous avons l'intuition, passons à la définition mathématique rigoureuse.
+
+## Taux d'accroissement
+
+Soit une fonction `$f$` définie sur un intervalle `$I$`, et `$x_0$` un point de cet intervalle. Pour tout `$h$` tel que `$x_0+h \in I$` et `$h \neq 0$`, le **taux d'accroissement** de `$f$` entre `$x_0$` et `$x_0+h$` est :
+`$ \frac{f(x_0+h) - f(x_0)}{h} $`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Dérivée en un point
+
+<div class="callout callout-color-default">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-pencil-alt" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Dérivée en un point
+
+</div>
+</div>
+<div class="callout-content">
+
+Soit `$f$` une fonction définie sur un intervalle `$I$` et `$x_0 \in I$`. On dit que `$f$` est **dérivable** au point `$x_0$` si le taux d'accroissement de `$f$` entre `$x_0$` et `$x_0+h$` admet une limite finie lorsque `$h$` tend vers `$0$`.
+
+Cette limite est appelée la **dérivée de `$f$` en `$x_0$`** et est notée `$f'(x_0)$` (notation de Lagrange) ou `$\frac{df}{dx}(x_0)$` (notation de Leibniz).
+
+`$ f'(x_0) = \lim_{h \to 0} \frac{f(x_0+h) - f(x_0)}{h} $`
+
+
+
+Une notation équivalente, en posant `$x = x_0+h$`, est :
+
+`$ f'(x_0) = \lim_{x \to x_0} \frac{f(x) - f(x_0)}{x - x_0} $`
+
+</div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Fonction dérivée
+
+<div class="callout callout-color-default">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-pencil-alt" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Fonction dérivée
+
+</div>
+</div>
+<div class="callout-content">
+
+Si une fonction `$f$` est dérivable en tout point `$x$` d'un intervalle `$J \subset I$`, alors la fonction qui à chaque `$x \in J$` associe `$f'(x)$` est appelée la **fonction dérivée** de `$f$` sur `$J$`, et est notée `$f'$` ou `$\frac{df}{dx}$`.
+
+</div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Dérivabilité et Continuité
+
+La dérivabilité est une propriété plus forte que la continuité.
+
+<div class="callout callout-color-default">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-pencil-alt" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Dérivabilité implique Continuité
+
+</div>
+</div>
+<div class="callout-content">
+
+Si une fonction `$f$` est dérivable en un point `$x_0$`, alors elle est continue en `$x_0$`.
+
+
+
+**Preuve rapide :**
+
+Puisque `$f$` est dérivable en `$x_0$`, on a `$f(x_0+h) - f(x_0) = h \cdot \frac{f(x_0+h) - f(x_0)}{h}$`.
+
+En passant à la limite quand `$h \to 0$`:
+
+`$ \lim_{h \to 0} (f(x_0+h) - f(x_0)) = \lim_{h \to 0} h \cdot \lim_{h \to 0} \frac{f(x_0+h) - f(x_0)}{h} $`
+
+`$ \lim_{h \to 0} (f(x_0+h) - f(x_0)) = 0 \cdot f'(x_0) = 0 $`
+
+Donc, `$\lim_{h \to 0} f(x_0+h) = f(x_0)$`, ce qui est la définition de la continuité en `$x_0$`.
+
+</div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+<div class="callout callout-color5">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-exclamation-triangle" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Attention
+
+</div>
+</div>
+<div class="callout-content">
+
+La réciproque est fausse ! Une fonction peut être continue en un point sans y être dérivable.
+
+L'exemple le plus classique est la fonction valeur absolue `$f(x) = |x|$` en `$x_0=0$`.
+
+*   `$f(x)$` est continue en `$0$` (car `$\lim_{x \to 0} |x| = 0 = |0|$`).
+
+*   Calculons la limite du taux d'accroissement en `$0$`:
+
+`$ \lim_{h \to 0} \frac{|0+h| - |0|}{h} = \lim_{h \to 0} \frac{|h|}{h} $`
+
+*   Si `$h \to 0^+$` (par la droite), `$\frac{|h|}{h} = \frac{h}{h} = 1$`.
+
+*   Si `$h \to 0^-$` (par la gauche), `$\frac{|h|}{h} = \frac{-h}{h} = -1$`.
+
+Les limites à droite et à gauche sont différentes, donc la limite n'existe pas. La fonction `$f(x)=|x|$` n'est pas dérivable en `$0$`. Graphiquement, il y a un "point anguleux".
+
+</div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Exemples Simples de Calcul de Dérivées (par la définition)
+
+Appliquons la définition formelle pour calculer les dérivées de quelques fonctions de base.
+
+## Fonction constante
+
+<div class="callout callout-color8">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-list" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Dérivée d'une fonction constante
+
+</div>
+</div>
+<div class="callout-content">
+
+Soit `$f(x) = c$`, où `$c$` est une constante réelle.
+
+
+
+Calculons `$f'(x)$` en utilisant la définition :
+
+`$ f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h} = \lim_{h \to 0} \frac{c - c}{h} = \lim_{h \to 0} \frac{0}{h} = \lim_{h \to 0} 0 = 0 $`
+
+
+
+La dérivée d'une fonction constante est `$0$`.
+
+*Interprétation :* Une fonction constante ne varie pas, son taux de variation instantané est donc nul. La tangente à une droite horizontale est la droite elle-même, de pente 0.
+
+</div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Fonction linéaire
+
+<div class="callout callout-color8">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-list" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Dérivée d'une fonction linéaire
+
+</div>
+</div>
+<div class="callout-content">
+
+Soit `$f(x) = ax+b$`, où `$a, b$` sont des constantes réelles.
+
+
+
+Calculons `$f'(x)$` :
+
+`$ f'(x) = \lim_{h \to 0} \frac{a(x+h)+b - (ax+b)}{h} $`
+
+`$ f'(x) = \lim_{h \to 0} \frac{ax+ah+b-ax-b}{h} $`
+
+`$ f'(x) = \lim_{h \to 0} \frac{ah}{h} = \lim_{h \to 0} a = a $`
+
+
+
+La dérivée d'une fonction linéaire `$f(x)=ax+b$` est `$a$`.
+
+*Interprétation :* La pente d'une droite est constante et égale à son coefficient directeur `$a$`.
+
+</div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Fonction carrée
+
+<div class="callout callout-color8">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-list" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Dérivée de `$f(x) = x^2$`
+
+</div>
+</div>
+<div class="callout-content">
+
+Soit `$f(x) = x^2$`.
+
+
+
+Calculons `$f'(x)$` :
+
+`$ f'(x) = \lim_{h \to 0} \frac{(x+h)- x^2}{h} $`
+
+`$ f'(x) = \lim_{h \to 0} \frac{x+ 2xh + h- x^2}{h} $`
+
+`$ f'(x) = \lim_{h \to 0} \frac{2xh + h^2}{h} $`
+
+`$ f'(x) = \lim_{h \to 0} (2x + h) = 2x + 0 = 2x $`
+
+
+
+La dérivée de `$f(x)=x^2$` est `$f'(x)=2x$`.
+
+</div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Fonction inverse
+
+<div class="callout callout-color8">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-list" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Dérivée de `$f(x) = \frac{1}{x}$`
+
+</div>
+</div>
+<div class="callout-content">
+
+Soit `$f(x) = \frac{1}{x}$` pour `$x \neq 0$`.
+
+
+
+Calculons `$f'(x)$` :
+
+`$ f'(x) = \lim_{h \to 0} \frac{\frac{1}{x+h} - \frac{1}{x}}{h} $`
+
+Mettons les fractions au même dénominateur :
+
+`$ f'(x) = \lim_{h \to 0} \frac{\frac{x - (x+h)}{x(x+h)}}{h} = \lim_{h \to 0} \frac{\frac{-h}{x(x+h)}}{h} $`
+
+`$ f'(x) = \lim_{h \to 0} \frac{-h}{h \cdot x(x+h)} = \lim_{h \to 0} \frac{-1}{x(x+h)} $`
+
+Pour `$h \to 0$`, `$x(x+h) \to x(x+0) = x^2$`.
+
+`$ f'(x) = -\frac{1}{x^2} $`
+
+
+
+La dérivée de `$f(x)=\frac{1}{x}$` est `$f'(x)=-\frac{1}{x^2}$`. Notez que `$f$` est définie pour `$x \neq 0$`, et `$f'$` l'est aussi.
+
+</div>
+</div>
+`
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+#  Interprétations et Applications Initiales
+
+Les dérivées sont des outils incroyablement polyvalents. Voici quelques-unes de leurs premières applications.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Sens de variation d'une fonction
+
+La dérivée est directement liée à la croissance ou la décroissance d'une fonction.
+
+<div class="callout callout-color-default">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-pencil-alt" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Théorème des variations
+
+</div>
+</div>
+<div class="callout-content">
+
+Soit `$f$` une fonction dérivable sur un intervalle `$I$`.
+
+*   Si `$f'(x) > 0$` pour tout `$x \in I$`, alors `$f$` est strictement croissante sur `$I$`.
+
+*   Si `$f'(x) < 0$` pour tout `$x \in I$`, alors `$f$` est strictement décroissante sur `$I$`.
+
+*   Si `$f'(x) = 0$` pour tout `$x \in I$`, alors `$f$` est constante sur `$I$`.
+
+
+
+[!note] Points critiques
+
+Les points où `$f'(x) = 0$` sont appelés des **points critiques**. Ils correspondent souvent à des maximums locaux, des minimums locaux ou des points d'inflexion (où la courbe change de concavité). L'étude du signe de la dérivée autour de ces points permet de déterminer leur nature.
+
+</div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Équation de la tangente à une courbe
+
+Puisque `$f'(x_0)$` est la pente de la tangente à la courbe de `$f$` au point `$(x_0, f(x_0))$`, nous pouvons écrire l'équation de cette droite.
+
+<div class="callout callout-color2">
+<div class="callout-title">
+<div class="callout-icon">
+
+<i class="fas fa-fire-alt" ></i>
+
+
+</div>
+<div class="callout-title-inner">
+
+Formule de l'équation de la tangente
+
+</div>
+</div>
+<div class="callout-content">
+
+L'équation de la tangente à la courbe de `$f$` au point d'abscisse `$x_0$` est donnée par :
+
+`$ y - f(x_0) = f'(x_0)(x - x_0) $`
+
+ou de manière équivalente :
+
+`$ y = f'(x_0)(x - x_0) + f(x_0) $`
+
+</div>
+</div>
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# ➡️ C'est la fin !
+
+Dans les chapitres suivants, nous allons :
+*   Découvrir les **règles de dérivation** (somme, produit, quotient, composition) qui vous permettront de dériver des fonctions complexes sans passer par la définition.
+*   Explorer des applications plus avancées, comme l'**optimisation** (recherche de maximums et minimums), l'étude des **fonctions trigonométriques, exponentielles et logarithmiques**.
+*   Préparer le terrain pour les **développements limités**, qui utilisent les dérivées pour approcher des fonctions par des polynômes.
+*   Envisager l'opération inverse, la **primitive** d'une fonction, qui nous mènera aux **intégrales** et au calcul d'aires ou de volumes.
+
+Les dérivées sont un pilier de l'analyse mathématique et un outil indispensable pour tout ingénieur. Maîtrisez ces bases, et vous serez prêt à aborder des problèmes complexes avec confiance !
+</div></script></section><section  data-markdown><script type="text/template"></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 700px; width: 960px; min-height: 700px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+- Cours précèdent: `cours-de-départ`
+- Prochain cours: Cours 2 - Dérivées
+- Page d'accueil de la compétence: Dérivées
+
+# 🗓️ Historique
+
+- Dernière MAJ: `28-Août-2025`
+- Rédigé par: Hamilton DE ARAUJO
+</div></script></section></div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="plugin/zoom/zoom.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/chart/chart.min.js"></script>
+	<script src="plugin/chart/plugin.js"></script>
+	<script src="plugin/menu/menu.js"></script>
+	<script src="plugin/customcontrols/plugin.js"></script>
+
+    <script>
+      function extend() {
+        var target = {};
+        for (var i = 0; i < arguments.length; i++) {
+          var source = arguments[i];
+          for (var key in source) {
+            if (source.hasOwnProperty(key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+        return target;
+      }
+
+	  function isLight(color) {
+		let hex = color.replace('#', '');
+
+		// convert #fff => #ffffff
+		if(hex.length == 3){
+			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+		}
+
+		const c_r = parseInt(hex.substr(0, 2), 16);
+		const c_g = parseInt(hex.substr(2, 2), 16);
+		const c_b = parseInt(hex.substr(4, 2), 16);
+		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+		return brightness > 155;
+	}
+
+	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
+	var isLight = isLight(bgColor);
+
+	if(isLight){
+		document.body.classList.add('has-light-background');
+	} else {
+		document.body.classList.add('has-dark-background');
+	}
+
+      // default options to init reveal.js
+      var defaultOptions = {
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        transition: 'default', // none/fade/slide/convex/concave/zoom
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
+          RevealZoom,
+          RevealNotes,
+          RevealMath.MathJax3,
+		  RevealMermaid,
+		  RevealChart,
+		  RevealCustomControls,
+		  RevealMenu,
+        ],
+
+
+    	allottedTime: 120 * 1000,
+
+		mathjax3: {
+			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+		},
+		markdown: {
+		  gfm: true,
+		  mangle: true,
+		  pedantic: false,
+		  smartLists: false,
+		  smartypants: false,
+		},
+
+		mermaid: {
+			theme: isLight ? 'default' : 'dark',
+		},
+
+		customcontrols: {
+			controls: [
+				{id: 'toggle-overview',
+				title: 'Toggle overview (O)',
+				icon: '<i class="fa fa-th"></i>',
+				action: 'Reveal.toggleOverview();'
+				},
+			]
+		},
+		menu: {
+			loadIcons: false
+		}
+      };
+
+      // options from URL query string
+      var queryOptions = Reveal().getQueryHash() || {};
+
+      var options = extend(defaultOptions, {"width":960,"height":700,"margin":0.04,"controls":true,"progress":true,"slideNumber":true,"transition":"slide","transitionSpeed":"slow"}, queryOptions);
+    </script>
+
+    <script>
+      Reveal.initialize(options);
+    </script>
+  </body>
+
+  <!-- created with Advanced Slides -->
+</html>
